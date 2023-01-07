@@ -1,6 +1,8 @@
 import Head from "next/head";
+import styled from "styled-components";
+import Card from "../../src/components/products/Card";
 
-export default function Home() {
+function Products() {
   return (
     <>
       <Head>
@@ -10,8 +12,23 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div>products</div>
+        <Wrapper>
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </Wrapper>
       </main>
     </>
   );
 }
+
+const Wrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+`;
+
+export default Products;
