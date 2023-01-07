@@ -14,54 +14,64 @@ const Card = ({ item_no, item_name, detail_image_url, price, score }: productIte
 
   return (
     <Container>
-      <Image
-        src={`${detail_image_url}`}
-        alt={`${item_name} 사진`}
-        className="image"
-        quality={100}
-        width={500}
-        height={500}
-      />
-      <Info>
+      <CardTitle>
+        <Image
+          src={`${detail_image_url}`}
+          alt={`${item_name} 사진`}
+          className="image"
+          quality={100}
+          width={500}
+          height={500}
+        />
+      </CardTitle>
+      <CardContent>
         <span className="item_name">{item_name}</span>
         <span className="price">
           {price.toLocaleString("ko-KR")}
           <span className="small__text">원</span>
         </span>
-        <div className="icon__wrapper">
-          <div className="icon__box">
-            {!isLikeHover ? (
-              <Image
-                src={EmptyHeartImg}
-                alt={"좋아요"}
-                className="icon__img"
-                onMouseOver={() => setIsLikeHover(!isLikeHover)}
-              />
-            ) : (
-              <Image
-                src={FillHeartImg}
-                alt={"좋아요"}
-                className="icon__img"
-                onMouseLeave={() => setIsLikeHover(!isLikeHover)}
-              />
-            )}
-            <span className={"small__text"}>{score}</span>
-          </div>
-          <div className="icon__box">
-            <Image src={AddCartImg} alt={"장바구니에 담기"} className="icon__img" />
-            {/*<Image src={RemoveCartImg} alt="장바구니에서 제거하기" className="icon__img" />*/}
-          </div>
+      </CardContent>
+      <CardFooter>
+        <div className="icon__box">
+          {!isLikeHover ? (
+            <Image
+              src={EmptyHeartImg}
+              alt={"좋아요"}
+              className="icon__img"
+              onMouseOver={() => setIsLikeHover(!isLikeHover)}
+            />
+          ) : (
+            <Image
+              src={FillHeartImg}
+              alt={"좋아요"}
+              className="icon__img"
+              onMouseLeave={() => setIsLikeHover(!isLikeHover)}
+            />
+          )}
+          <span className={"small__text"}>{score}</span>
         </div>
-      </Info>
+        <div className="icon__box">
+          <Image src={AddCartImg} alt={"장바구니에 담기"} className="icon__img" />
+          {/*<Image src={RemoveCartImg} alt="장바구니에서 제거하기" className="icon__img" />*/}
+        </div>
+      </CardFooter>
     </Container>
   );
 };
 
 const Container = styled.div`
-  position: relative;
+  display: flex;
+  flex-direction: column;
+
   width: 100%;
   height: 500px;
   //border: 1px solid ${(props) => props.theme.color.primary[400]};
+`;
+
+const CardTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 0;
 
   .image {
     width: 100%;
@@ -70,9 +80,10 @@ const Container = styled.div`
   }
 `;
 
-const Info = styled.div`
+const CardContent = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1;
 
   .item_name {
     margin-top: 20px;
@@ -92,12 +103,12 @@ const Info = styled.div`
     font-size: 16px;
     font-weight: 400;
   }
+`;
 
-  .icon__wrapper {
-    position: absolute;
-    bottom: 0;
-    display: flex;
-  }
+const CardFooter = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
 
   .icon__box {
     display: flex;
