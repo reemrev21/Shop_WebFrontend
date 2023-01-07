@@ -2,17 +2,24 @@ import React from "react";
 import Header from "./Header";
 import { theme } from "../config/style/theme";
 import GlobalStyle from "../config/style/GlobalStyle";
-import { ThemeProvider } from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 
 type AppLayoutProps = {
   children: React.ReactNode;
 };
-export default function Layout({ children }: AppLayoutProps) {
+
+function Layout({ children }: AppLayoutProps) {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Header />
-      <main>{children}</main>
+      <Main>{children}</Main>
     </ThemeProvider>
   );
 }
+
+const Main = styled.main`
+  margin-top: 80px;
+`;
+
+export default Layout;

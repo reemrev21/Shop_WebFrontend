@@ -21,6 +21,13 @@ const Wrapper = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 0 71px 0 65px;
+  background-color: ${(props) => props.theme.color.shades["WHITE"]};
+  z-index: 999;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 `;
 
 export default Header;

@@ -42,7 +42,7 @@ const Wrapper = styled.nav`
   }
 
   .nav_item:not(:last-child) {
-    margin-right: 20px;
+    margin-right: 40px;
   }
 
   .Selected {
