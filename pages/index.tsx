@@ -11,6 +11,7 @@ export default function Home() {
       </Head>
       <main>
         <div>hello</div>
+        <button>test</button>
       </main>
     </>
   );
