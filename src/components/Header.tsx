@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import Logo from "./Logo";
+import dynamic from "next/dynamic";
 
 const Header = () => {
+  const DynamicNavigation = dynamic(() => import("./Navigation"));
+
   return (
     <Wrapper>
       <Logo />
+      <DynamicNavigation />
     </Wrapper>
   );
 };

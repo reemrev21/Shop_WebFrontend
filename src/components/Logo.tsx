@@ -4,7 +4,7 @@ import CustomLink from "./CustomLink";
 import Image from "next/image";
 
 function Logo() {
-  const memoLogo = useMemo(() => <Image src={LogoImg} alt={"shop logo"} />, []);
+  const memoLogo = useMemo(() => <Image src={LogoImg} alt={"shop logo"} width={300} />, []);
 
   return <CustomLink url={"/"} text={memoLogo} isSelected={false} className={"Logo"}></CustomLink>;
 }
