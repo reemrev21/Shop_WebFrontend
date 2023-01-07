@@ -1,6 +1,7 @@
 import Head from "next/head";
+import MainCard from "../src/components/MainCard";
 
-export default function Home() {
+function Home() {
   return (
     <>
       <Head>
@@ -10,9 +11,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div>hello</div>
-        <button>test</button>
+        <MainCard
+          imgUrl={`https://cdn.pixabay.com/photo/2015/08/25/11/49/stairs-906720_1280.jpg`}
+          title="PRODUCTS"
+          url="/products"
+        />
       </main>
     </>
   );
 }
+
+export default Home;
