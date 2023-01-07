@@ -17,6 +17,7 @@ function Products() {
         <Wrapper>
           {productItems.map((item: productItem) => (
             <Card
+              key={item.item_no}
               item_no={item.item_no}
               item_name={item.item_name}
               detail_image_url={item.detail_image_url}
