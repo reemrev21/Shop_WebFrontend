@@ -26,8 +26,8 @@ const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: inherit;
     -webkit-appearance: none;
   };
-
-경  a {
+  
+  a {
     color: inherit; 
     text-decoration: none; 
     outline: none;
