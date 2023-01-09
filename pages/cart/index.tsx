@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Card from "../../src/components/cart/Card";
 import { productItems } from "../../src/__mocks__/productsItems";
 import { productItem } from "../../src/types/product";
+import CouponSelectBox from "../../src/components/cart/CouponSelectBox";
 
 function Cart() {
   return (
@@ -30,6 +31,7 @@ function Cart() {
           </div>
           <div>
             <Title>쿠 폰</Title>
+            <CouponSelectBox />
           </div>
           <div>
             <Title>최종결제금액</Title>
