@@ -16,7 +16,7 @@ function Cart() {
       <main>
         <Wrapper>
           <div>
-            <h2>상품</h2>
+            <Title>상 품</Title>
             {productItems.map((item: productItem) => (
               <Card
                 key={item.item_no}
@@ -28,6 +28,12 @@ function Cart() {
               />
             ))}
           </div>
+          <div>
+            <Title>쿠 폰</Title>
+          </div>
+          <div>
+            <Title>최종결제금액</Title>
+          </div>
         </Wrapper>
       </main>
     </>
@@ -35,10 +41,16 @@ function Cart() {
 }
 
 const Wrapper = styled.div`
-  padding: 0 16px;
+  padding: 0 40px;
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 0.1fr 0.5fr;
   grid-row-gap: 20px;
+`;
+
+const Title = styled.h2`
+  margin-top: 10px;
+  font-size: 35px;
+  font-weight: 500;
 `;
 
 export default Cart;
