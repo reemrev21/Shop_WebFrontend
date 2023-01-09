@@ -44,7 +44,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   };
 
-  input {
+  select input {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -52,6 +52,8 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
   input:focus { outline: none; }
+  select:focus { outline: none; }
+
   input::-ms-clear { display: none; }
 
   input[type='number']::-webkit-inner-spin-button,
