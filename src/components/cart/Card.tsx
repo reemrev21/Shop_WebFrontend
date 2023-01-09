@@ -6,6 +6,8 @@ import plusImg from "../../../public/assets/plus.png";
 import minusImg from "../../../public/assets/minus.png";
 
 const Card = ({ item_no, item_name, detail_image_url, price, score }: productItem) => {
+  const [count, setCount] = React.useState(0);
+
   return (
     <Container>
       <CardTitle>
@@ -24,7 +26,12 @@ const Card = ({ item_no, item_name, detail_image_url, price, score }: productIte
       </CardTitle>
       <CardContent>
         <Image src={minusImg} alt="수량 빼기" className="icon" />
-        <input value={score} className="input__count" />
+        <input
+          value={count}
+          type="number"
+          className="input__count"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCount(Number(e.target.value))}
+        />
         <Image src={plusImg} alt="수량 추가" className="icon" />
       </CardContent>
       <CardContent>
