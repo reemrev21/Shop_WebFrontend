@@ -48,8 +48,10 @@ const GlobalStyle = createGlobalStyle`
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    box-shadow: none;
+    padding: 0;
   }
-
+  input:focus { outline: none; }
   input::-ms-clear { display: none; }
 
   input[type='number']::-webkit-inner-spin-button,
@@ -57,6 +59,9 @@ const GlobalStyle = createGlobalStyle`
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+  }
+  input[type='number'] {
+    -moz-appearance: textfield;
   }
 `;
 
