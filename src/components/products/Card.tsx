@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { productItem } from "../../types/product";
+import { IProduct } from "../../types/product";
 import Image from "next/image";
 import FillHeartImg from "../../../public/assets/fill-heart.png";
 import EmptyHeartImg from "../../../public/assets/empty-heart.png";
 import AddCartImg from "../../../public/assets/add-to-cart.png";
 import RemoveCartImg from "../../../public/assets/remove-from-cart.png";
 
-const Card = ({ item_no, item_name, detail_image_url, price, score }: productItem) => {
+const Card = ({ item_no, item_name, detail_image_url, price, score }: IProduct) => {
   const router = useRouter();
   const [isLikeHover, setIsLikeHover] = useState<Boolean>(false);
 
