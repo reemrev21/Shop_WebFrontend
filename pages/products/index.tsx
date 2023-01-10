@@ -8,14 +8,21 @@ import { useQuery } from "react-query";
 
 function Products() {
   const { status, data: productsList, error } = useQuery("fetchProducts", () => productItems);
+  const [descProductsList, setDescProductsList] = React.useState<Array<IProduct>>([]);
+
+  React.useEffect(() => {
+    if (productsList !== undefined) {
+      setDescProductsList(productsList.sort((a, b) => b.score - a.score));
+    }
+  }, [productsList]);
 
   if (status === "loading") {
-    return <span>Loading...</span>;
+    return <span>로딩 중 입니다.</span>;
   }
 
-  // if (status === "error") {
-  //   return <span>Error: {error.message}</span>;
-  // }
+  if (status === "error") {
+    return <span>에러가 발생했습니다.</span>;
+  }
 
   return (
     <>
@@ -27,8 +34,8 @@ function Products() {
       </Head>
       <main>
         <Wrapper>
-          {productsList &&
-            productsList.map((item: IProduct) => (
+          {descProductsList &&
+            descProductsList.map((item: IProduct) => (
               <Card
                 key={item.item_no}
                 item_no={item.item_no}
