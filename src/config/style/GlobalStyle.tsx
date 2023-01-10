@@ -43,6 +43,28 @@ const GlobalStyle = createGlobalStyle`
     border: 0;
     padding: 0;
   };
+
+  select input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    box-shadow: none;
+    padding: 0;
+  }
+  input:focus { outline: none; }
+  select:focus { outline: none; }
+
+  input::-ms-clear { display: none; }
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
 `;
 
 export default GlobalStyle;
