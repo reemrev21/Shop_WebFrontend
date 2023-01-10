@@ -2,11 +2,12 @@ import Head from "next/head";
 import styled from "styled-components";
 import Card from "../../src/components/cart/Card";
 import { productItems } from "../../src/__mocks__/productsItems";
-import { productItem } from "../../src/types/product";
+import { IProduct } from "../../src/types/product";
 import CouponSelectBox from "../../src/components/cart/CouponSelectBox";
 import FinalPriceBox from "../../src/components/cart/FinalPriceBox";
 
 function Cart() {
+
   return (
     <>
       <Head>
@@ -19,7 +20,7 @@ function Cart() {
         <Wrapper>
           <div>
             <Title>상 품</Title>
-            {productItems.map((item: productItem) => (
+            {productItems.map((item: IProduct) => (
               <Card
                 key={item.item_no}
                 item_no={item.item_no}

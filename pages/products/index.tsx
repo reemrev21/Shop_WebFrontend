@@ -2,9 +2,21 @@ import Head from "next/head";
 import styled from "styled-components";
 import Card from "../../src/components/products/Card";
 import { productItems } from "../../src/__mocks__/productsItems";
-import { productItem } from "../../src/types/product";
+import { IProduct } from "../../src/types/product";
+import React from "react";
+import { useQuery } from "react-query";
 
 function Products() {
+  const { status, data: productsList, error } = useQuery("fetchProducts", () => productItems);
+
+  if (status === "loading") {
+    return <span>Loading...</span>;
+  }
+
+  // if (status === "error") {
+  //   return <span>Error: {error.message}</span>;
+  // }
+
   return (
     <>
       <Head>
@@ -15,16 +27,17 @@ function Products() {
       </Head>
       <main>
         <Wrapper>
-          {productItems.map((item: productItem) => (
-            <Card
-              key={item.item_no}
-              item_no={item.item_no}
-              item_name={item.item_name}
-              detail_image_url={item.detail_image_url}
-              price={item.price}
-              score={item.score}
-            />
-          ))}
+          {productsList &&
+            productsList.map((item: IProduct) => (
+              <Card
+                key={item.item_no}
+                item_no={item.item_no}
+                item_name={item.item_name}
+                detail_image_url={item.detail_image_url}
+                price={item.price}
+                score={item.score}
+              />
+            ))}
         </Wrapper>
       </main>
     </>
