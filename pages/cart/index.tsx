@@ -4,6 +4,7 @@ import Card from "../../src/components/cart/Card";
 import { productItems } from "../../src/__mocks__/productsItems";
 import { productItem } from "../../src/types/product";
 import CouponSelectBox from "../../src/components/cart/CouponSelectBox";
+import FinalPriceBox from "../../src/components/cart/FinalPriceBox";
 
 function Cart() {
   return (
@@ -34,7 +35,8 @@ function Cart() {
             <CouponSelectBox />
           </div>
           <div>
-            <Title>최종결제금액</Title>
+            <Title>최종주문금액</Title>
+            <FinalPriceBox />
           </div>
         </Wrapper>
       </main>
@@ -43,10 +45,19 @@ function Cart() {
 }
 
 const Wrapper = styled.div`
-  padding: 0 40px;
+  padding: 0 40px 100px 40px;
   display: grid;
-  grid-template-rows: 1fr 0.1fr 0.5fr;
   grid-row-gap: 20px;
+
+  .price__wrapper {
+    display: flex;
+  }
+
+  .price__item {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
 `;
 
 const Title = styled.h2`
