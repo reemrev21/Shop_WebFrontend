@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { productItem } from "../../types/product";
+import { IProduct } from "../../types/product";
 import Image from "next/image";
 import plusImg from "../../../public/assets/plus.png";
 import minusImg from "../../../public/assets/minus.png";
 
-const Card = ({ item_no, item_name, detail_image_url, price, score }: productItem) => {
+const Card = ({ item_no, item_name, detail_image_url, price, score }: IProduct) => {
   const [count, setCount] = React.useState(0);
 
   return (
