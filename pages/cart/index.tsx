@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styled from "styled-components";
 import Card from "../../src/components/cart/Card";
-import { IProduct } from "../../src/types/product";
+import { IProduct, IProductWithCount } from "../../src/types/product";
 import CouponSelectBox from "../../src/components/cart/CouponSelectBox";
 import FinalPriceBox from "../../src/components/cart/FinalPriceBox";
 import { useEffect, useState } from "react";
@@ -12,7 +12,7 @@ function Cart() {
   const cartItem = typeof window !== "undefined" ? sessionStorage.getItem("cartItem") : null;
   const [cartItems, setCartItems] = useState([]);
   const [checkedNum, setCheckedNum] = useRecoilState(checkedItemState);
-  const [selectedItem, setSelectedItem] = useState<Array<IProduct>>([]);
+  const [selectedItem, setSelectedItem] = useState<Array<IProductWithCount>>([]);
   const [newCartItems, setNewCartItems] = useState<Array<IProduct>>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const selectedCoupon = useRecoilValue(selectedCouponState);
@@ -25,12 +25,16 @@ function Cart() {
   }, [cartItem]);
 
   useEffect(() => {
-    setSelectedItem(cartItems.filter((item: IProduct) => checkedNum.some((i) => i === item.item_no)));
+    setSelectedItem(cartItems.filter((item: IProductWithCount) => checkedNum.some((i) => i === item.item_no)));
   }, [cartItems, checkedNum]);
 
   useEffect(() => {
-    setTotalPrice(selectedItem.map((item: IProduct) => item.price * item.count).reduce((a, b) => a + b, 0));
+    setTotalPrice(selectedItem.map((item: IProductWithCount) => item.price * item.count).reduce((a, b) => a + b, 0));
   }, [selectedItem, selectedItem.map((item) => item.count)]);
+
+  if (cartItems.length === 0) {
+    return <NoDataWrapper>장바구니에 상품을 담아주세요!</NoDataWrapper>;
+  }
 
   return (
     <>
@@ -72,7 +76,7 @@ function Cart() {
               discountRate={selectedCoupon.discountRate}
               cantUsedCouponPrice={selectedItem
                 .filter((item) => item.availableCoupon === false)
-                .map((item) => item.price)
+                .map((item) => item.price * item.count)
                 .reduce((a, b) => a + b, 0)}
             />
           </div>
@@ -81,6 +85,14 @@ function Cart() {
     </>
   );
 }
+
+const NoDataWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+  font-size: 25px;
+  font-weight: 500;
+`;
 
 const Wrapper = styled.div`
   padding: 0 40px 100px 40px;
