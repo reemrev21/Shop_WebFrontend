@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { IProduct } from "../../types/product";
@@ -8,7 +8,7 @@ import EmptyHeartImg from "../../../public/assets/empty-heart.png";
 import AddCartImg from "../../../public/assets/add-to-cart.png";
 import RemoveCartImg from "../../../public/assets/remove-from-cart.png";
 
-const Card = ({ item_no, item_name, detail_image_url, price, score }: IProduct) => {
+const Card = ({ item_no, item_name, detail_image_url, price, score, availableCoupon }: IProduct) => {
   const router = useRouter();
   const [isLikeHover, setIsLikeHover] = useState<Boolean>(false);
   const [cartItems, setCartItems] = useState([]);
@@ -24,7 +24,7 @@ const Card = ({ item_no, item_name, detail_image_url, price, score }: IProduct) 
     if (typeof window !== "undefined") {
       sessionStorage.setItem(
         "cartItem",
-        JSON.stringify([...cartItems, { item_no, item_name, detail_image_url, price }]),
+        JSON.stringify([...cartItems, { item_no, item_name, detail_image_url, price, availableCoupon, count: 1 }]),
       );
     }
   };
@@ -51,7 +51,6 @@ const Card = ({ item_no, item_name, detail_image_url, price, score }: IProduct) 
     removedSessionStorage(itemNo);
     alert("장바구니에서 삭제 되었습니다.");
   };
-
 
   return (
     <Container>

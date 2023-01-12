@@ -1,12 +1,21 @@
 import Head from "next/head";
 import styled from "styled-components";
 import Card from "../../src/components/cart/Card";
-import { productItems } from "../../src/__mocks__/productsItems";
 import { IProduct } from "../../src/types/product";
 import CouponSelectBox from "../../src/components/cart/CouponSelectBox";
 import FinalPriceBox from "../../src/components/cart/FinalPriceBox";
+import { useEffect, useState } from "react";
 
 function Cart() {
+  const cartItem = typeof window !== "undefined" ? sessionStorage.getItem("cartItem") : null;
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    if (cartItem) {
+      setCartItems(JSON.parse(cartItem));
+    }
+  }, [cartItem]);
+
   return (
     <>
       <Head>
@@ -19,16 +28,18 @@ function Cart() {
         <Wrapper>
           <div>
             <Title>상 품</Title>
-            {productItems.map((item: IProduct) => (
-              <Card
-                key={item.item_no}
-                item_no={item.item_no}
-                item_name={item.item_name}
-                detail_image_url={item.detail_image_url}
-                price={item.price}
-                score={item.score}
-              />
-            ))}
+            {cartItems &&
+              cartItems.map((item: IProduct) => (
+                <Card
+                  key={item.item_no}
+                  item_no={item.item_no}
+                  item_name={item.item_name}
+                  detail_image_url={item.detail_image_url}
+                  price={item.price}
+                  availableCoupon={item.availableCoupon}
+                  count={item.count}
+                />
+              ))}
           </div>
           <div>
             <Title>쿠 폰</Title>
