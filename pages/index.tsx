@@ -14,7 +14,7 @@ function Home() {
         <MainCard
           imgUrl={`https://cdn.pixabay.com/photo/2015/08/25/11/49/stairs-906720_1280.jpg`}
           title="PRODUCTS"
-          url="/products?page=1"
+          url="/products"
         />
       </main>
     </>

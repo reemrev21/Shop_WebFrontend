@@ -1,19 +1,17 @@
+import React, { useState } from "react";
 import Head from "next/head";
 import styled from "styled-components";
 import Card from "../../src/components/products/Card";
 import { productItems } from "../../src/__mocks__/productsItems";
 import { IProduct } from "../../src/types/product";
-import React from "react";
 import { useQuery } from "react-query";
 import ReactPaginate from "react-paginate";
-import { useRouter } from "next/router";
 
 function Products() {
-  const router = useRouter();
   const { status, data: productsList, error } = useQuery("fetchProducts", () => productItems);
-  const [descProductsList, setDescProductsList] = React.useState<Array<IProduct>>([]);
-  const [page, setPage] = React.useState(1);
-  const [totalPage, setTotalPage] = React.useState(1);
+  const [descProductsList, setDescProductsList] = useState<Array<IProduct>>([]);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const perPage = 5;
   const offset = (page - 1) * perPage;
 
@@ -34,7 +32,6 @@ function Products() {
 
   const handlePageChange = (event: any) => {
     setPage(event.selected + 1);
-    router.push(`products?page=${event.selected + 1}`);
   };
 
   return (
@@ -83,7 +80,7 @@ const Wrapper = styled.div`
 `;
 
 const Pagination = styled(ReactPaginate)`
-  margin-top: 70px;
+  margin-top: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
