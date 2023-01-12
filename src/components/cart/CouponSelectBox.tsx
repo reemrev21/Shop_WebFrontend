@@ -1,14 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-import { couponItem } from "../../types/coupon";
-import { coupons } from "../../__mocks__/coupon";
+import { ICoupon } from "../../types/coupon";
+import { couponsItems } from "../../__mocks__/coupon";
+import { useRecoilState } from "recoil";
+import { selectedCouponState } from "../../state/cartState";
+import { useQuery } from "react-query";
 
 const CouponSelectBox = () => {
-  const [coupon, setCoupon] = React.useState({});
+  const { data: couponList } = useQuery("fetchCoupons", () => couponsItems);
+  const [coupon, setCoupon] = useRecoilState(selectedCouponState);
 
   React.useEffect(() => {
-    if (coupons !== undefined) {
-      setCoupon(coupons[0]);
+    if (couponsItems !== undefined) {
+      setCoupon({
+        type: "none",
+        title: "선택안함",
+      });
     }
   }, []);
 
@@ -19,11 +26,22 @@ const CouponSelectBox = () => {
         value={JSON.stringify(coupon)}
         onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCoupon(JSON.parse(e.target.value))}
       >
-        {coupons.map((item: couponItem, index: number) => (
-          <option value={JSON.stringify(item)} key={index}>
-            {item.title}
+        {
+          <option
+            value={JSON.stringify({
+              type: "none",
+              title: "선택안함",
+            })}
+          >
+            선택 안함
           </option>
-        ))}
+        }
+        {couponList &&
+          couponList.map((item: ICoupon, index: number) => (
+            <option value={JSON.stringify(item)} key={index}>
+              {item.title}
+            </option>
+          ))}
       </select>
     </Container>
   );
