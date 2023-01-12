@@ -20,7 +20,6 @@ function Navigation() {
     },
   ];
   const router = useRouter();
-
   return (
     <Wrapper>
       {navs.map((el, idx) => {

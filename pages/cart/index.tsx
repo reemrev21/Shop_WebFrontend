@@ -7,7 +7,6 @@ import CouponSelectBox from "../../src/components/cart/CouponSelectBox";
 import FinalPriceBox from "../../src/components/cart/FinalPriceBox";
 
 function Cart() {
-
   return (
     <>
       <Head>
