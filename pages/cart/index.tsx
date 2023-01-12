@@ -11,21 +11,24 @@ import { selectedItemState } from "../../src/state/cartState";
 function Cart() {
   const cartItem = typeof window !== "undefined" ? sessionStorage.getItem("cartItem") : null;
   const [cartItems, setCartItems] = useState([]);
-  const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState);
-
-  console.log("selectedItem", selectedItem);
+  const [checkedNum, setCheckedNum] = useRecoilState(selectedItemState);
+  const [selectedItem, setSelectedItem] = useState<Array<IProduct>>([]);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
   useEffect(() => {
     if (cartItem) {
       setCartItems(JSON.parse(cartItem));
-      setSelectedItem(JSON.parse(cartItem).map((item: IProduct) => item.item_no));
+      setCheckedNum(JSON.parse(cartItem).map((item: IProduct) => item.item_no));
     }
   }, [cartItem]);
 
-  // useEffect(() => {
-  //   if (cartItems) {
-  //   }
-  // }, [cartItem, cartItems]);
+  useEffect(() => {
+    setSelectedItem(cartItems.filter((item: IProduct) => checkedNum.some((i) => i === item.item_no)));
+  }, [cartItems, checkedNum]);
+
+  useEffect(() => {
+    setTotalPrice(selectedItem.map((item: IProduct) => item.price).reduce((a, b) => a + b, 0));
+  }, [selectedItem]);
 
   return (
     <>
@@ -58,7 +61,7 @@ function Cart() {
           </div>
           <div>
             <Title>최종주문금액</Title>
-            <FinalPriceBox />
+            <FinalPriceBox totalPrice={totalPrice} />
           </div>
         </Wrapper>
       </main>

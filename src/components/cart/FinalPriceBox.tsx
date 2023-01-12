@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-const FinalPriceBox = () => {
+const FinalPriceBox = ({ totalPrice }: { totalPrice: number }) => {
   return (
     <Wrapper>
       <div className="price__item">
         <span className="small__text">주문금액</span>
         <span className="large__text">
-          {10000}
+          {totalPrice.toLocaleString("kr")}
           <span className="small__text">원</span>
         </span>
       </div>
