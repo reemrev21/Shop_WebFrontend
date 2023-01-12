@@ -11,7 +11,7 @@ export interface INav {
 function Navigation() {
   const navs: INav[] = [
     {
-      url: "/products",
+      url: "/products?page=1",
       text: "PRODUCTS",
     },
     {
@@ -20,11 +20,11 @@ function Navigation() {
     },
   ];
   const router = useRouter();
-
+  console.log(router);
   return (
     <Wrapper>
       {navs.map((el, idx) => {
-        const isSelected = router.pathname.startsWith(el.url);
+        const isSelected = el.url.includes(router.pathname);
 
         return <CustomLink isSelected={isSelected} url={el.url} text={el.text} className="nav_item" key={idx} />;
       })}
