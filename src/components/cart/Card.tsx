@@ -5,8 +5,8 @@ import Image from "next/image";
 import plusImg from "../../../public/assets/plus.png";
 import minusImg from "../../../public/assets/minus.png";
 
-const Card = ({ item_no, item_name, detail_image_url, price, score }: IProduct) => {
-  const [count, setCount] = React.useState(0);
+const Card = ({ item_no, item_name, detail_image_url, price, count, availableCoupon }: IProduct) => {
+  const [itemCount, setItemCount] = React.useState(0);
 
   return (
     <Container>
@@ -22,6 +22,7 @@ const Card = ({ item_no, item_name, detail_image_url, price, score }: IProduct) 
         <div style={{ display: "flex", flexDirection: "column", padding: "20px" }}>
           <span className="item_name">{item_name}</span>
           <span className="price">{price.toLocaleString("ko-KR")}원</span>
+          {availableCoupon === false && <span>(쿠폰 적용 불가)</span>}
         </div>
       </CardTitle>
       <CardContent>
@@ -30,7 +31,7 @@ const Card = ({ item_no, item_name, detail_image_url, price, score }: IProduct) 
           value={count}
           type="number"
           className="input__count"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCount(Number(e.target.value))}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setItemCount(Number(e.target.value))}
         />
         <Image src={plusImg} alt="수량 추가" className="icon" />
       </CardContent>
@@ -91,7 +92,7 @@ const CardContent = styled.div`
     height: 40px;
     margin: 0 10px;
     text-align: center;
-    border: 2px solid ${(props) => props.theme.color.primary[400]};
+    border: 2px solid ${(props) => props.theme.color.shades["BLACK"]};
   }
 
   .small__text {
