@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { IProduct } from "../../types/product";
@@ -7,42 +7,10 @@ import FillHeartImg from "../../../public/assets/fill-heart.png";
 import EmptyHeartImg from "../../../public/assets/empty-heart.png";
 import AddCartImg from "../../../public/assets/add-to-cart.png";
 import RemoveCartImg from "../../../public/assets/remove-from-cart.png";
-import { json } from "stream/consumers";
-import cart from "../../../pages/cart";
 
 const Card = ({ item_no, item_name, detail_image_url, price, score }: IProduct) => {
   const router = useRouter();
   const [isLikeHover, setIsLikeHover] = useState<Boolean>(false);
-  const [cartItems, setCartItems] = useState([]);
-
-  useEffect(() => {
-    const cartItem = sessionStorage.getItem("cartItem");
-    if (cartItem) {
-      setCartItems(JSON.parse(cartItem));
-    }
-  }, []);
-
-  const setSessionStorage = () => {
-    typeof window !== "undefined"
-      ? sessionStorage.setItem(
-          "cartItem",
-          JSON.stringify([...cartItems, { item_no, item_name, detail_image_url, price }]),
-        )
-      : null;
-  };
-
-  const handleAddCart = async () => {
-    if (cartItems.length === 3) {
-      alert("장바구니는 3개의 상품만 담을 수 있습니다.");
-    } else {
-      setSessionStorage();
-      if (confirm("장바구니에 등록되었습니다. 장바구니로 이동하시겠습니까?")) {
-        await router.push("/cart");
-      }
-    }
-  };
-
-  console.log(cartItems);
 
   return (
     <Container>
@@ -83,8 +51,7 @@ const Card = ({ item_no, item_name, detail_image_url, price, score }: IProduct) 
           <span className={"small__text"}>{score}</span>
         </div>
         <div className="icon__box">
-          {/*{ cartItems.includes(item_no)}*/}
-          <Image src={AddCartImg} alt={"장바구니에 담기"} className="icon__img" onClick={handleAddCart} />
+          <Image src={AddCartImg} alt={"장바구니에 담기"} className="icon__img" />
           {/*<Image src={RemoveCartImg} alt="장바구니에서 제거하기" className="icon__img" />*/}
         </div>
       </CardFooter>
