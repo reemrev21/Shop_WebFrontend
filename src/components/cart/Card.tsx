@@ -5,6 +5,7 @@ import plusImg from "../../../public/assets/plus.png";
 import minusImg from "../../../public/assets/minus.png";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { checkedItemState } from "../../state/cartState";
+import { IProduct } from "../../types/product";
 
 const Card = ({
   item_no,
@@ -13,6 +14,8 @@ const Card = ({
   price,
   count,
   availableCoupon,
+  cartItems,
+  setCartItems,
 }: {
   item_no: number;
   item_name: string;
@@ -21,6 +24,8 @@ const Card = ({
   score?: number;
   availableCoupon?: boolean;
   count?: number;
+  cartItems: Array<IProduct>;
+  setCartItems: any;
 }) => {
   const [itemCount, setItemCount] = useState(1);
   const orderPrice = price * itemCount;
@@ -28,12 +33,16 @@ const Card = ({
   const [checkedItem, setCheckedItem] = useRecoilState(checkedItemState);
 
   useEffect(() => {
-    setItemCount(Number(count));
-  }, [count]);
-
-  useEffect(() => {
     if (itemCount === 0) {
       setItemCount(1);
+    } else {
+      setCartItems(
+        cartItems.map((item: IProduct) => {
+          if (item.item_no === item_no) {
+            item["count"] = itemCount;
+          }
+        }),
+      );
     }
   }, [itemCount]);
 

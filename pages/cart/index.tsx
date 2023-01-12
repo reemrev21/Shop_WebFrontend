@@ -13,7 +13,7 @@ function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [checkedNum, setCheckedNum] = useRecoilState(checkedItemState);
   const [selectedItem, setSelectedItem] = useState<Array<IProduct>>([]);
-
+  const [newCartItems, setNewCartItems] = useState<Array<IProduct>>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const selectedCoupon = useRecoilValue(selectedCouponState);
 
@@ -29,8 +29,8 @@ function Cart() {
   }, [cartItems, checkedNum]);
 
   useEffect(() => {
-    setTotalPrice(selectedItem.map((item: IProduct) => item.price).reduce((a, b) => a + b, 0));
-  }, [selectedItem]);
+    setTotalPrice(selectedItem.map((item: IProduct) => item.price * item.count).reduce((a, b) => a + b, 0));
+  }, [selectedItem, selectedItem.map((item) => item.count)]);
 
   return (
     <>
@@ -54,6 +54,8 @@ function Cart() {
                   price={item.price}
                   availableCoupon={item.availableCoupon}
                   count={item.count}
+                  cartItems={cartItems}
+                  setCartItems={setNewCartItems}
                 />
               ))}
           </div>
