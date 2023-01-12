@@ -32,8 +32,6 @@ function Cart() {
     setTotalPrice(selectedItem.map((item: IProduct) => item.price).reduce((a, b) => a + b, 0));
   }, [selectedItem]);
 
-  console.log(selectedCoupon);
-
   return (
     <>
       <Head>
