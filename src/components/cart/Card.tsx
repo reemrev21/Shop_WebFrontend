@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { IProduct } from "../../types/product";
 import Image from "next/image";
@@ -6,11 +6,14 @@ import plusImg from "../../../public/assets/plus.png";
 import minusImg from "../../../public/assets/minus.png";
 
 const Card = ({ item_no, item_name, detail_image_url, price, count, availableCoupon }: IProduct) => {
-  const [itemCount, setItemCount] = React.useState(0);
+  const [itemCount, setItemCount] = useState(1);
+  const orderPrice = price * itemCount;
+  const [isSelected, setIsSelected] = useState(true);
 
   return (
     <Container>
       <CardTitle>
+        <input type="checkbox" className="checkbox" onChange={() => setIsSelected(!isSelected)} checked={isSelected} />
         <Image
           src={`${detail_image_url}`}
           alt={`${item_name} 사진`}
@@ -37,7 +40,7 @@ const Card = ({ item_no, item_name, detail_image_url, price, count, availableCou
       </CardContent>
       <CardContent>
         <span className="large__text">
-          {price.toLocaleString("ko-KR")}
+          {orderPrice.toLocaleString("ko-KR")}
           <span className="small__text">원</span>
         </span>
       </CardContent>
@@ -78,6 +81,11 @@ const CardTitle = styled.div`
     margin-top: 10px;
     font-size: 18px;
     font-weight: 500;
+  }
+
+  .checkbox {
+    margin-right: 20px;
+    //border: 2px solid ${(props) => props.theme.color.shades["BLACK"]};
   }
 `;
 
