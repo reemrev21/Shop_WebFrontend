@@ -1,6 +1,12 @@
 import { atom } from "recoil";
+import { ICoupon } from "../types/coupon";
 
-export const selectedItemState = atom<Array<number>>({
-  key: "selectedItemState",
+export const checkedItemState = atom<Array<number>>({
+  key: "checkedItemState",
   default: [],
+});
+
+export const selectedCouponState = atom({
+  key: "selectedCouponState",
+  default: {},
 });

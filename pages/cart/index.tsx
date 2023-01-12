@@ -6,14 +6,15 @@ import CouponSelectBox from "../../src/components/cart/CouponSelectBox";
 import FinalPriceBox from "../../src/components/cart/FinalPriceBox";
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { selectedItemState } from "../../src/state/cartState";
+import { checkedItemState, selectedCouponState } from "../../src/state/cartState";
 
 function Cart() {
   const cartItem = typeof window !== "undefined" ? sessionStorage.getItem("cartItem") : null;
   const [cartItems, setCartItems] = useState([]);
-  const [checkedNum, setCheckedNum] = useRecoilState(selectedItemState);
+  const [checkedNum, setCheckedNum] = useRecoilState(checkedItemState);
   const [selectedItem, setSelectedItem] = useState<Array<IProduct>>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const selectedCoupon = useRecoilValue(selectedCouponState);
 
   useEffect(() => {
     if (cartItem) {
@@ -29,6 +30,8 @@ function Cart() {
   useEffect(() => {
     setTotalPrice(selectedItem.map((item: IProduct) => item.price).reduce((a, b) => a + b, 0));
   }, [selectedItem]);
+
+  console.log(selectedCoupon);
 
   return (
     <>

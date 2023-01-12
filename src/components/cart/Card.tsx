@@ -4,7 +4,7 @@ import Image from "next/image";
 import plusImg from "../../../public/assets/plus.png";
 import minusImg from "../../../public/assets/minus.png";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { selectedItemState } from "../../state/cartState";
+import { checkedItemState } from "../../state/cartState";
 
 const Card = ({
   item_no,
@@ -25,7 +25,7 @@ const Card = ({
   const [itemCount, setItemCount] = useState(1);
   const orderPrice = price * itemCount;
   const [isSelected, setIsSelected] = useState(true);
-  const [selectedItems, setSelectedItem] = useRecoilState(selectedItemState);
+  const [checkedItem, setCheckedItem] = useRecoilState(checkedItemState);
 
   useEffect(() => {
     setItemCount(Number(count));
@@ -33,9 +33,9 @@ const Card = ({
 
   useEffect(() => {
     if (!isSelected) {
-      setSelectedItem(selectedItems.filter((item) => item !== item_no));
-    } else if (isSelected && !selectedItems.includes(item_no)) {
-      setSelectedItem([...selectedItems, item_no]);
+      setCheckedItem(checkedItem.filter((item) => item !== item_no));
+    } else if (isSelected && !checkedItem.includes(item_no)) {
+      setCheckedItem([...checkedItem, item_no]);
     }
   }, [isSelected]);
 
@@ -46,7 +46,7 @@ const Card = ({
           type="checkbox"
           className="checkbox"
           onChange={(event) => setIsSelected(event.target.checked)}
-          checked={selectedItems.includes(item_no)}
+          checked={checkedItem.includes(item_no)}
         />
         <Image
           src={`${detail_image_url}`}

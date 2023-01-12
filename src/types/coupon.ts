@@ -1,4 +1,4 @@
-export interface couponItem {
+export interface ICoupon {
   type: string;
   title: string;
   discountRate?: number;
