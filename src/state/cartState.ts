@@ -6,7 +6,10 @@ export const checkedItemState = atom<Array<number>>({
   default: [],
 });
 
-export const selectedCouponState = atom({
+export const selectedCouponState = atom<ICoupon>({
   key: "selectedCouponState",
-  default: {},
+  default: {
+    type: "none",
+    title: "선택안함",
+  },
 });

@@ -59,7 +59,7 @@ const Card = ({
         <div style={{ display: "flex", flexDirection: "column", padding: "20px" }}>
           <span className="item_name">{item_name}</span>
           <span className="price">{price.toLocaleString("ko-KR")}원</span>
-          {!availableCoupon && <span>(쿠폰 적용 불가)</span>}
+          {!availableCoupon && availableCoupon !== undefined && <span>(쿠폰 적용 불가)</span>}
         </div>
       </CardTitle>
       <CardContent>

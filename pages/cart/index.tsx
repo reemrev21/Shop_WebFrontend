@@ -13,6 +13,7 @@ function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [checkedNum, setCheckedNum] = useRecoilState(checkedItemState);
   const [selectedItem, setSelectedItem] = useState<Array<IProduct>>([]);
+
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const selectedCoupon = useRecoilValue(selectedCouponState);
 
@@ -64,7 +65,16 @@ function Cart() {
           </div>
           <div>
             <Title>최종주문금액</Title>
-            <FinalPriceBox totalPrice={totalPrice} />
+            <FinalPriceBox
+              totalPrice={totalPrice}
+              discountType={selectedCoupon.type}
+              discountAmount={selectedCoupon.discountAmount}
+              discountRate={selectedCoupon.discountRate}
+              cantUsedCouponPrice={selectedItem
+                .filter((item) => item.availableCoupon === false)
+                .map((item) => item.price)
+                .reduce((a, b) => a + b, 0)}
+            />
           </div>
         </Wrapper>
       </main>
