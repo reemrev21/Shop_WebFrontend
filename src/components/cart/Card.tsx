@@ -32,12 +32,26 @@ const Card = ({
   }, [count]);
 
   useEffect(() => {
+    if (itemCount === 0) {
+      setItemCount(1);
+    }
+  }, [itemCount]);
+
+  useEffect(() => {
     if (!isSelected) {
       setCheckedItem(checkedItem.filter((item) => item !== item_no));
     } else if (isSelected && !checkedItem.includes(item_no)) {
       setCheckedItem([...checkedItem, item_no]);
     }
   }, [isSelected]);
+
+  const handleCountPlus = () => {
+    setItemCount((count) => count + 1);
+  };
+
+  const handleCountMinus = () => {
+    setItemCount((count) => count - 1);
+  };
 
   return (
     <Container>
@@ -63,14 +77,14 @@ const Card = ({
         </div>
       </CardTitle>
       <CardContent>
-        <Image src={minusImg} alt="수량 빼기" className="icon" />
+        <Image src={minusImg} alt="수량 빼기" className="icon" onClick={handleCountMinus} />
         <input
-          value={itemCount}
+          value={Number(itemCount.toString().replace(/(^0+)/, ""))}
           type="number"
           className="input__count"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setItemCount(Number(e.target.value))}
         />
-        <Image src={plusImg} alt="수량 추가" className="icon" />
+        <Image src={plusImg} alt="수량 추가" className="icon" onClick={handleCountPlus} />
       </CardContent>
       <CardContent>
         <span className="large__text">
@@ -119,7 +133,6 @@ const CardTitle = styled.div`
 
   .checkbox {
     margin-right: 20px;
-    //border: 2px solid ${(props) => props.theme.color.shades["BLACK"]};
   }
 `;
 
@@ -150,6 +163,7 @@ const CardContent = styled.div`
   .icon {
     width: 20px;
     height: 20px;
+    cursor: pointer;
   }
 `;
 

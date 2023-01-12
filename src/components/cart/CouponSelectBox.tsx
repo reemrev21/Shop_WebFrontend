@@ -5,7 +5,6 @@ import { couponsItems } from "../../__mocks__/coupon";
 import { useRecoilState } from "recoil";
 import { selectedCouponState } from "../../state/cartState";
 import { useQuery } from "react-query";
-import { productItems } from "../../__mocks__/productsItems";
 
 const CouponSelectBox = () => {
   const { data: couponList } = useQuery("fetchCoupons", () => couponsItems);

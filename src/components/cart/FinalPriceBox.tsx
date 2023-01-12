@@ -71,7 +71,7 @@ const FinalPriceBox = ({
           {discountType === "none" && totalPrice.toLocaleString("kr")}
           {discountType === "amount" &&
             discountAmount !== undefined &&
-            (totalPrice - discountAmount).toLocaleString("kr")}
+            (canUsedCouponPrice - discountAmount + cantUsedCouponPrice).toLocaleString("kr")}
           {discountType === "rate" &&
             discountRate !== undefined &&
             (totalPrice - canUsedCouponPrice * (discountRate * 0.01)).toLocaleString("kr")}
