@@ -7,28 +7,33 @@ import FillHeartImg from "../../../public/assets/fill-heart.png";
 import EmptyHeartImg from "../../../public/assets/empty-heart.png";
 import AddCartImg from "../../../public/assets/add-to-cart.png";
 import RemoveCartImg from "../../../public/assets/remove-from-cart.png";
-import { json } from "stream/consumers";
-import cart from "../../../pages/cart";
 
 const Card = ({ item_no, item_name, detail_image_url, price, score }: IProduct) => {
   const router = useRouter();
   const [isLikeHover, setIsLikeHover] = useState<Boolean>(false);
   const [cartItems, setCartItems] = useState([]);
+  const cartItem = sessionStorage.getItem("cartItem");
 
   useEffect(() => {
-    const cartItem = sessionStorage.getItem("cartItem");
     if (cartItem) {
       setCartItems(JSON.parse(cartItem));
     }
-  }, []);
+  }, [cartItem]);
 
   const setSessionStorage = () => {
-    typeof window !== "undefined"
-      ? sessionStorage.setItem(
-          "cartItem",
-          JSON.stringify([...cartItems, { item_no, item_name, detail_image_url, price }]),
-        )
-      : null;
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem(
+        "cartItem",
+        JSON.stringify([...cartItems, { item_no, item_name, detail_image_url, price }]),
+      );
+    }
+  };
+
+  const removedSessionStorage = (itemNo: number) => {
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("cartItem");
+      sessionStorage.setItem("cartItem", JSON.stringify(cartItems.filter((item: IProduct) => item.item_no !== itemNo)));
+    }
   };
 
   const handleAddCart = async () => {
@@ -42,7 +47,10 @@ const Card = ({ item_no, item_name, detail_image_url, price, score }: IProduct) 
     }
   };
 
-  console.log(cartItems);
+  const handleRemoveCart = async (itemNo: number) => {
+    removedSessionStorage(itemNo);
+    alert("장바구니에서 삭제 되었습니다.");
+  };
 
   return (
     <Container>
@@ -75,7 +83,7 @@ const Card = ({ item_no, item_name, detail_image_url, price, score }: IProduct) 
           ) : (
             <Image
               src={FillHeartImg}
-              alt={"좋아요"}
+              alt={"좋아요 취소"}
               className="icon__img"
               onMouseLeave={() => setIsLikeHover(!isLikeHover)}
             />
@@ -83,9 +91,16 @@ const Card = ({ item_no, item_name, detail_image_url, price, score }: IProduct) 
           <span className={"small__text"}>{score}</span>
         </div>
         <div className="icon__box">
-          {/*{ cartItems.includes(item_no)}*/}
-          <Image src={AddCartImg} alt={"장바구니에 담기"} className="icon__img" onClick={handleAddCart} />
-          {/*<Image src={RemoveCartImg} alt="장바구니에서 제거하기" className="icon__img" />*/}
+          {cartItems.some((item: IProduct) => item.item_no === item_no) ? (
+            <Image
+              src={RemoveCartImg}
+              alt="장바구니에서 제거하기"
+              className="icon__img"
+              onClick={() => handleRemoveCart(item_no)}
+            />
+          ) : (
+            <Image src={AddCartImg} alt={"장바구니에 담기"} className="icon__img" onClick={handleAddCart} />
+          )}
         </div>
       </CardFooter>
     </Container>
