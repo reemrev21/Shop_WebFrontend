@@ -62,6 +62,21 @@ const Card = ({
     setItemCount((count) => count - 1);
   };
 
+  const removedSessionStorage = (itemNo: number) => {
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("cartItem");
+      sessionStorage.setItem("cartItem", JSON.stringify(cartItems.filter((item: IProduct) => item.item_no !== itemNo)));
+    }
+  };
+
+  const handleRemoveCart = async (itemNo: number) => {
+    if (confirm("장바구니에서 삭제하시겠습니까? ")) {
+      removedSessionStorage(itemNo);
+      alert("장바구니에서 삭제 되었습니다.");
+      window.location.reload();
+    }
+  };
+
   return (
     <Container>
       <CardTitle>
@@ -99,6 +114,11 @@ const Card = ({
         <span className="large__text">
           {orderPrice.toLocaleString("ko-KR")}
           <span className="small__text">원</span>
+        </span>
+      </CardContent>
+      <CardContent>
+        <span className="icon" onClick={() => handleRemoveCart(item_no)}>
+          X
         </span>
       </CardContent>
     </Container>
@@ -173,6 +193,7 @@ const CardContent = styled.div`
     width: 20px;
     height: 20px;
     cursor: pointer;
+    font-weight: 700;
   }
 `;
 

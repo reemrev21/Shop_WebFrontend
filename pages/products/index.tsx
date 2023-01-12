@@ -53,6 +53,7 @@ function Products() {
                 detail_image_url={item.detail_image_url}
                 price={item.price}
                 score={item.score}
+                count={1}
                 availableCoupon={item.availableCoupon}
               />
             ))}

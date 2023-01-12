@@ -5,5 +5,5 @@ export interface IProduct {
   price: number;
   score?: number;
   availableCoupon?: boolean;
-  count: number;
+  count?: number;
 }
