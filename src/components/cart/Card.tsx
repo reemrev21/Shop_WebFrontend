@@ -1,19 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { IProduct } from "../../types/product";
 import Image from "next/image";
 import plusImg from "../../../public/assets/plus.png";
 import minusImg from "../../../public/assets/minus.png";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { selectedItemState } from "../../state/cartState";
 
-const Card = ({ item_no, item_name, detail_image_url, price, count, availableCoupon }: IProduct) => {
+const Card = ({
+  item_no,
+  item_name,
+  detail_image_url,
+  price,
+  count,
+  availableCoupon,
+}: {
+  item_no: number;
+  item_name: string;
+  detail_image_url: string;
+  price: number;
+  score?: number;
+  availableCoupon?: boolean;
+  count?: number;
+}) => {
   const [itemCount, setItemCount] = useState(1);
   const orderPrice = price * itemCount;
   const [isSelected, setIsSelected] = useState(true);
+  const [selectedItems, setSelectedItem] = useRecoilState(selectedItemState);
+
+  useEffect(() => {
+    setItemCount(Number(count));
+  }, [count]);
+
+  useEffect(() => {
+    if (!isSelected) {
+      setSelectedItem(selectedItems.filter((item) => item !== item_no));
+    } else if (isSelected && !selectedItems.includes(item_no)) {
+      setSelectedItem([...selectedItems, item_no]);
+    }
+  }, [isSelected]);
 
   return (
     <Container>
       <CardTitle>
-        <input type="checkbox" className="checkbox" onChange={() => setIsSelected(!isSelected)} checked={isSelected} />
+        <input
+          type="checkbox"
+          className="checkbox"
+          onChange={(event) => setIsSelected(event.target.checked)}
+          checked={selectedItems.includes(item_no)}
+        />
         <Image
           src={`${detail_image_url}`}
           alt={`${item_name} 사진`}
@@ -25,13 +59,13 @@ const Card = ({ item_no, item_name, detail_image_url, price, count, availableCou
         <div style={{ display: "flex", flexDirection: "column", padding: "20px" }}>
           <span className="item_name">{item_name}</span>
           <span className="price">{price.toLocaleString("ko-KR")}원</span>
-          {availableCoupon === false && <span>(쿠폰 적용 불가)</span>}
+          {!availableCoupon && <span>(쿠폰 적용 불가)</span>}
         </div>
       </CardTitle>
       <CardContent>
         <Image src={minusImg} alt="수량 빼기" className="icon" />
         <input
-          value={count}
+          value={itemCount}
           type="number"
           className="input__count"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setItemCount(Number(e.target.value))}

@@ -5,16 +5,27 @@ import { IProduct } from "../../src/types/product";
 import CouponSelectBox from "../../src/components/cart/CouponSelectBox";
 import FinalPriceBox from "../../src/components/cart/FinalPriceBox";
 import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { selectedItemState } from "../../src/state/cartState";
 
 function Cart() {
   const cartItem = typeof window !== "undefined" ? sessionStorage.getItem("cartItem") : null;
   const [cartItems, setCartItems] = useState([]);
+  const [selectedItem, setSelectedItem] = useRecoilState(selectedItemState);
+
+  console.log("selectedItem", selectedItem);
 
   useEffect(() => {
     if (cartItem) {
       setCartItems(JSON.parse(cartItem));
+      setSelectedItem(JSON.parse(cartItem).map((item: IProduct) => item.item_no));
     }
   }, [cartItem]);
+
+  // useEffect(() => {
+  //   if (cartItems) {
+  //   }
+  // }, [cartItem, cartItems]);
 
   return (
     <>
